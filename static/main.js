@@ -17,6 +17,7 @@ form.addEventListener("submit", (e) => {
     newInput.name = "serverchoice";
     newInput.value = serverchoice;
     newInput.style.display = "hidden";
+    newInput.required = true;
     form.appendChild(newInput);
 });
 // could be buggy
