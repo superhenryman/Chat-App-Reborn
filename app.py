@@ -27,12 +27,13 @@ def index():
 
 @app.route("/error")
 def error(): return render_template("error.html")
+
 @app.route("/chatroom.html")
 def chatroom():
     return render_template("chatroom.html")
 
 @app.route("/signup.html")
-def signup():
+def signup_template():
     return render_template()
 
 @app.route("/signup", methods=["POST"])
