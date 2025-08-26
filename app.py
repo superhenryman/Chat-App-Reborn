@@ -31,15 +31,19 @@ def username():
     username = data.get("username")
     password = data.get("password")
     serverchoice = data.get("serverChoice")
+    
     if user_exists(username, password):
         # user exists
+        print("user exists")
         if not user_is_banned(username):
             # if user isn't banned
+            print("user not banned")
             pass
         else:
-            # user banned
+            print("user banned")
             pass
     else:
+        print("user doesn't exist")
         return render_template("signup.html")
 if __name__ == '__main__':
     socketio.run(app, log_output=True, port=8080, host="0.0.0.0")
