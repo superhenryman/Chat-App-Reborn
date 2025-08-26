@@ -16,7 +16,7 @@ document.getElementById("server3").addEventListener("click" , () => { serverchoi
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const username = document.getElementById("username");
-    const response = await fetch("/loginorsignup", {
+    const response = await fetch("/wheredoigo", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

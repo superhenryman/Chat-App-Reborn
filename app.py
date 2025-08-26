@@ -25,7 +25,25 @@ init_banned_db()
 def index():
     return render_template('index.html')
 
-@app.route("/loginorsignup", methods=["POST"])
+@app.route("/signup", methods=["POST"])
+def signup():
+    try:
+        data = request.json
+        username = data.get("username")
+        password = data.get("password")
+        create_user(username, password)
+        return jsonify({
+            "goto": "root",
+            "code": render_template("index.html")
+        })
+    except Exception as e:
+        logging.error(e)
+        return jsonify({
+            "goto": "nowhere",
+            "error": e
+        })
+
+@app.route("/wheredoigo", methods=["POST"])
 def username():
     data = request.json
     username = data.get("username")
@@ -49,7 +67,7 @@ def username():
         print("user doesn't exist")
         return jsonify({
             "goto": "signup",
-            "code": render_template("signup.html")
+            "code": render_template("signup.html"),
         })
 if __name__ == '__main__':
     socketio.run(app, log_output=True, port=8080, host="0.0.0.0")
