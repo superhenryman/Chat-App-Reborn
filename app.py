@@ -39,9 +39,8 @@ def signup_template():
 @app.route("/signup", methods=["POST"])
 def signup():
     try:
-        data = request.json
-        username = data.get("username")
-        password = data.get("password")
+        username = request.form.get("username")
+        password = request.form.get("password")
         create_user(username, password)
         return redirect("/")
     except Exception as e:
