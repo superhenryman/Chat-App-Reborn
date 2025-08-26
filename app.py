@@ -50,10 +50,9 @@ def signup():
 
 @app.route("/wheredoigo", methods=["POST"])
 def username():
-    data = request.json
-    username = data.get("username")
-    password = data.get("password")
-    serverchoice = data.get("serverChoice")
+    serverchoice = request.form.get("serverchoice")
+    username = request.form.get("username")
+    password = request.form.get("password")
     
     if user_exists(username, password):
         # user exists

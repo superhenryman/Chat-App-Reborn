@@ -11,28 +11,12 @@ document.getElementById("server1").addEventListener("click" , () => { serverchoi
 document.getElementById("server2").addEventListener("click" , () => { serverchoice = 2; })
 document.getElementById("server3").addEventListener("click" , () => { serverchoice = 3; })
 // i couldn't think of a better solution to this
-
-
-form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const username = document.getElementById("username");
-    const response = await fetch("/wheredoigo", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            "username": username.value,
-            "serverChoice": serverchoice,
-            "password": document.getElementById("password").value
-        })
-    });
-    if (!response.ok) {
-        alert("response bad");
-    }
-    const json = await response.json();
+form.addEventListener("submit", (e) => {
+    const newInput = document.createElement("input");
+    newInput.type = serverchoice;
+    newInput.name = "serverchoice";
+    container.appendChild(newInput);
 });
-
 // could be buggy
 setInterval(() => {
     switch (serverchoice) {
