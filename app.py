@@ -34,7 +34,7 @@ def chatroom():
 
 @app.route("/signup.html")
 def signup_template():
-    return render_template()
+    return render_template("signup.html")
 
 @app.route("/signup", methods=["POST"])
 def signup():
