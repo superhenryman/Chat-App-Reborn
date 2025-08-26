@@ -28,7 +28,7 @@ def index():
 @app.route("/error")
 def error(): return render_template("error.html")
 
-@app.route("/chatroom.html")
+@app.route("/chatroom")
 def chatroom():
     return render_template("chatroom.html")
 
