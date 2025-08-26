@@ -38,9 +38,10 @@ def username():
         if not user_is_banned(username):
             # if user isn't banned
             print("user not banned")
-            pass
+            return render_template("chatroom.html")
         else:
             print("user banned")
+            return "you're gay"
             pass
     else:
         print("user doesn't exist")
