@@ -16,6 +16,7 @@ form.addEventListener("submit", (e) => {
     newInput.type = "text";
     newInput.name = "serverchoice";
     newInput.value = serverchoice;
+    newInput.style.display = "hidden";
     form.appendChild(newInput);
 });
 // could be buggy
