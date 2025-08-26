@@ -18,6 +18,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv("KEY")
 socketio = SocketIO(app, async_mode='eventlet')
 
+init_db()
+init_banned_db()
 
 @app.route('/')
 def index():
