@@ -13,9 +13,10 @@ document.getElementById("server3").addEventListener("click" , () => { serverchoi
 // i couldn't think of a better solution to this
 form.addEventListener("submit", (e) => {
     const newInput = document.createElement("input");
-    newInput.type = serverchoice;
+    newInput.type = "text";
     newInput.name = "serverchoice";
-    container.appendChild(newInput);
+    newInput.value = serverchoice;
+    form.appendChild(newInput);
 });
 // could be buggy
 setInterval(() => {

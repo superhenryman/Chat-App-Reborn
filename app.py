@@ -53,7 +53,6 @@ def username():
     serverchoice = request.form.get("serverchoice")
     username = request.form.get("username")
     password = request.form.get("password")
-    
     if user_exists(username, password):
         # user exists
         print("user exists")
