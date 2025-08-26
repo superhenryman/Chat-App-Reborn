@@ -7,7 +7,7 @@ import logging
 import os
 import html
 from database_stuff import *
-
+from security import sign_client_id, verify_signature
 def clean(text: str) -> str:
     """ Function to prevent XSS (screw you, dirty hacker.) """
     return str(html.escape(text, quote=True))
@@ -38,13 +38,18 @@ def username():
         if not user_is_banned(username):
             # if user isn't banned
             print("user not banned")
-            return render_template("chatroom.html")
+            return jsonify({
+                "goto": "chatroom",
+                "code": render_template("chatroom.html")
+            })
         else:
             print("user banned")
             return "you're not cool"
-            pass
     else:
         print("user doesn't exist")
-        return render_template("signup.html")
+        return jsonify({
+            "goto": "signup",
+            "code": render_template("signup.html")
+        })
 if __name__ == '__main__':
     socketio.run(app, log_output=True, port=8080, host="0.0.0.0")
