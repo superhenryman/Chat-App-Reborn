@@ -41,7 +41,7 @@ def username():
             return render_template("chatroom.html")
         else:
             print("user banned")
-            return "you're gay"
+            return "you're not cool"
             pass
     else:
         print("user doesn't exist")

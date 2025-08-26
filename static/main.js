@@ -30,6 +30,7 @@ form.addEventListener("submit", async (e) => {
     if (!response.ok) {
         alert("response bad");
     }
+    document.body.innerHTML = await response.text();
 });
 
 // could be buggy
