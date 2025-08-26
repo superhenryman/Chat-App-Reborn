@@ -31,16 +31,6 @@ form.addEventListener("submit", async (e) => {
         alert("response bad");
     }
     const json = await response.json();
-    switch (json.goto) {
-        case "signup":
-            document.documentElement.innerHTML = json.code;
-            break;
-        case "chatroom":
-            document.documentElement.innerHTML = json.code;
-            break;
-        default:
-            break;
-    }
 });
 
 // could be buggy

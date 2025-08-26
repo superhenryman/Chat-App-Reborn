@@ -25,6 +25,16 @@ init_banned_db()
 def index():
     return render_template('index.html')
 
+@app.route("/error")
+def error(): return render_template("error.html")
+@app.route("/chatroom.html")
+def chatroom():
+    return render_template("chatroom.html")
+
+@app.route("/signup.html")
+def signup():
+    return render_template()
+
 @app.route("/signup", methods=["POST"])
 def signup():
     try:
@@ -32,16 +42,10 @@ def signup():
         username = data.get("username")
         password = data.get("password")
         create_user(username, password)
-        return jsonify({
-            "goto": "root",
-            "code": render_template("index.html")
-        })
+        return redirect("/")
     except Exception as e:
         logging.error(e)
-        return jsonify({
-            "goto": "nowhere",
-            "error": e
-        })
+        return redirect("/error")
 
 @app.route("/wheredoigo", methods=["POST"])
 def username():
@@ -56,18 +60,12 @@ def username():
         if not user_is_banned(username):
             # if user isn't banned
             print("user not banned")
-            return jsonify({
-                "goto": "chatroom",
-                "code": render_template("chatroom.html")
-            })
+            return redirect("/chatroom")
         else:
             print("user banned")
             return "you're not cool"
     else:
         print("user doesn't exist")
-        return jsonify({
-            "goto": "signup",
-            "code": render_template("signup.html"),
-        })
+        return redirect("/signup.html")
 if __name__ == '__main__':
     socketio.run(app, log_output=True, port=8080, host="0.0.0.0")

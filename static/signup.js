@@ -17,11 +17,4 @@ form.addEventListener("submit", async (e) => {
     if (!response.ok) {
         alert("response bad");
     }
-    const result = await response.json();
-    if (result.goto === "root") {
-        alert(`Don't forget! Your username is ${username} and your password is ${password}!`);
-        document.documentElement.innerHTML = result.code;
-    } else {
-        alert(result.error);
-    }
 });
