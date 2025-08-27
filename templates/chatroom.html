@@ -32,7 +32,8 @@
             if (!messagevalue) return;
             socket.emit("message", {
                 serverchoice: serverChoice,
-                message: messagevalue
+                message: messagevalue,
+                username: username
             });
             input.value = "";
         }
