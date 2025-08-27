@@ -59,7 +59,6 @@ def signup():
 @app.route("/wheredoigo", methods=["POST"])
 def wheretogore():
     serverchoice = request.form.get("serverchoice")
-    print(serverchoice)
     username = request.form.get("username")
     password = request.form.get("password")
     if user_exists_password(username, password):
@@ -90,7 +89,7 @@ def handle_message(data):
     username = f"<{user_temp}>" 
     message = clean(data["message"])
     emit("message", {
-        "serverChoice": serverChoice,
+        "serverchoice": serverChoice,
         "message": f"{username} {message}",
         "color": "white"
     }, room=serverChoice)
