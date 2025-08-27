@@ -1,6 +1,6 @@
 import eventlet
 eventlet.monkey_patch()
-from flask import Flask, render_template, jsonify, redirect, request, url_for, abort
+from flask import Flask, render_template, session, redirect, request, url_for, abort
 from flask_socketio import SocketIO, emit, join_room
 from argon2 import PasswordHasher
 import logging
@@ -35,9 +35,12 @@ def index():
 @app.route("/error")
 def error(): return render_template("error.html")
 
-@app.route("/chatroom/<server_choice>/<username>")
-def chatroom(server_choice, username):
-    if not user_exists(username):
+@app.route("/chatroom/<server_choice>/")
+def chatroom(server_choice):
+    if "username" not in session:
+        return redirect(url_for("error"))
+    username = session["username"]
+    if not user_exists(username) or user_is_banned(username):
         abort(400)
     return render_template("chatroom.html", serverchoice=server_choice, username=username)
 
@@ -63,7 +66,8 @@ def wheretogore():
     password = request.form.get("password")
     if user_exists_password(username, password):
         if not user_is_banned(username):
-            return redirect(url_for("chatroom", server_choice=serverchoice, username=username))
+            session['username'] = username
+            return redirect(url_for("chatroom", server_choice=serverchoice))
         else:
             return "you're not cool"
     else:
@@ -91,7 +95,7 @@ def handle_message(data):
     emit("message", {
         "serverchoice": serverChoice,
         "message": f"{username} {message}",
-        "color": "white"
+        "color": "black"
     }, room=serverChoice)
 
 if __name__ == '__main__':
