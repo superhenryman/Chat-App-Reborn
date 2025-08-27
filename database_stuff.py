@@ -102,8 +102,7 @@ def reset_password(username: str, password: str, id: int) -> bool:
         logging.error(f"Error in reset_password(): {e}")
         return False
 
-
-def user_exists(username: str, password: str) -> bool:
+def user_exists_password(username: str, password: str) -> bool:
     try:
         with get_connection() as conn:
             with conn.cursor() as cur:
@@ -118,4 +117,21 @@ def user_exists(username: str, password: str) -> bool:
                 return ph.verify(stored_hash, password)
     except Exception as e:
         logging.error(f"Error in is_user_exists(): {e}")
+        return False
+
+def user_exists(username: str) -> bool:
+    """
+    Returns True if the username exists in the database.
+    """
+    try:
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT 1 FROM users WHERE username = %s",
+                    (username,),
+                )
+                row = cur.fetchone()
+                return bool(row)
+    except Exception as e:
+        logging.error(f"Error in user_exists(): {e}")
         return False

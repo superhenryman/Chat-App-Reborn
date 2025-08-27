@@ -1,12 +1,12 @@
 import eventlet
 eventlet.monkey_patch()
-from flask import Flask, render_template, jsonify, redirect, request, url_for
+from flask import Flask, render_template, jsonify, redirect, request, url_for, abort
 from flask_socketio import SocketIO, emit, join_room
 from argon2 import PasswordHasher
 import logging
 import os
 import html
-from database_stuff import init_banned_db, init_db, create_user, user_exists, user_is_banned
+from database_stuff import init_banned_db, init_db, create_user, user_exists, user_is_banned, user_exists_password
 import random
 import string
 def clean(text: str) -> str:
@@ -37,6 +37,8 @@ def error(): return render_template("error.html")
 
 @app.route("/chatroom/<server_choice>/<username>")
 def chatroom(server_choice, username):
+    if not user_exists(username):
+        abort(400)
     return render_template("chatroom.html", serverchoice=server_choice, username=username)
 
 @app.route("/signup.html")
@@ -57,9 +59,10 @@ def signup():
 @app.route("/wheredoigo", methods=["POST"])
 def wheretogore():
     serverchoice = request.form.get("serverchoice")
+    print(serverchoice)
     username = request.form.get("username")
     password = request.form.get("password")
-    if user_exists(username, password):
+    if user_exists_password(username, password):
         if not user_is_banned(username):
             return redirect(url_for("chatroom", server_choice=serverchoice, username=username))
         else:
