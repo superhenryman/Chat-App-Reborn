@@ -22,7 +22,7 @@
             if (data.serverchoice == serverChoice) {
                 const chatbox = document.getElementById("chatbox");
                 const color = data.color;
-                chatbox.innerHTML += `<div class="message", style="color: ${color}">${data.message}</div>`;
+                chatbox.innerHTML += `<div class="message" style="color: ${color}">${data.message}</div>`;
                 chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: "smooth" });
             }
         });
