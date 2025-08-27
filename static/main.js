@@ -2,7 +2,7 @@ const form = document.getElementById("startForm");
 const button = document.getElementById("pickServerbutton");
 const sidebar = document.getElementById("sidebar");
 let serverchoice = 1;
-
+let submitted = 0;
 button.addEventListener("click", () => {
     sidebar.style.display = "block";
 });
@@ -11,14 +11,18 @@ document.getElementById("server1").addEventListener("click" , () => { serverchoi
 document.getElementById("server2").addEventListener("click" , () => { serverchoice = 2; })
 document.getElementById("server3").addEventListener("click" , () => { serverchoice = 3; })
 // i couldn't think of a better solution to this
+
 form.addEventListener("submit", (e) => {
+    if (submitted === 1) {
+        return;
+    }
     const newInput = document.createElement("input");
-    newInput.type = "text";
+    newInput.type = "hidden";
     newInput.name = "serverchoice";
     newInput.value = serverchoice;
-    newInput.style.display = "hidden";
     newInput.required = true;
     form.appendChild(newInput);
+    submitted = 1;
 });
 // could be buggy
 setInterval(() => {

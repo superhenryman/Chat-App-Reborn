@@ -1,1 +1,48 @@
-ass
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/chatroom.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <title></title>
+</head>
+<body>
+    <h1 id="welcome"></h1>
+    <div id="chatbox"></div>
+    <input id="sendMessage"> <br>
+    <script>
+
+        const socket = io();
+        const serverChoice = "{{ serverchoice }}";
+        const username = "{{ username }}";
+        document.title = `Server ${serverChoice}`;
+        document.getElementById("welcome").innerText = `Welcome to Server ${serverChoice}!`;
+        socket.on("message", (data) => {
+            if (data.serverchoice == serverChoice) {
+                const chatbox = document.getElementById("chatbox");
+                const color = data.color;
+                chatbox.innerHTML += `<div class="message", style="color: ${color}">${data.message}</div>`;
+                chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: "smooth" });
+            }
+        });
+        socket.emit("join", { serverchoice: serverChoice, username: username})
+        function sendMessage(serverChoice, input) {
+            const messagevalue = input.value.trim();
+            if (!messagevalue) return;
+            socket.emit("message", {
+                serverchoice: serverChoice,
+                message: messagevalue
+            });
+            input.value = "";
+        }
+        const input = document.getElementById("sendMessage");
+        input.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                sendMessage(serverChoice, input);
+            }
+        });
+        input.focus();
+    </script>
+</body>
+</html>
