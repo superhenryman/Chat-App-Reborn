@@ -90,7 +90,7 @@ def handle_join(data):
 def handle_message(data):
     serverChoice = data["serverchoice"]
     user_temp = clean(data["username"])
-    username = f"<{user_temp}>" 
+    username = f"{user_temp}: " 
     message = clean(data["message"])
     emit("message", {
         "serverchoice": serverChoice,
