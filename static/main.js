@@ -2,7 +2,6 @@ const form = document.getElementById("startForm");
 const button = document.getElementById("pickServerbutton");
 const sidebar = document.getElementById("sidebar");
 let serverchoice = 1;
-let submitted = 0;
 button.addEventListener("click", () => {
     sidebar.style.display = "block";
 });
@@ -13,9 +12,8 @@ document.getElementById("server3").addEventListener("click" , () => { serverchoi
 // i couldn't think of a better solution to this
 
 form.addEventListener("submit", (e) => {
-    if (submitted === 1) {
-        return;
-    }
+    let existing = form.querySelector("input[name='serverchoice']");
+    if (existing) form.removeChild(existing);
     const newInput = document.createElement("input");
     newInput.type = "hidden";
     newInput.name = "serverchoice";
